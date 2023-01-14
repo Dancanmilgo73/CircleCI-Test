@@ -4,36 +4,47 @@ version: 2.1
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
-jobs:
-  save-hello-world-output:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-    docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+commands:
+  print_pipeline_id:
     steps:
-      - run:
-          name: "Save hello world to file"
-          command: echo "hello world" > ~/test.txt 
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - test.txt   
-  print_output_file:
+      - run: echo $CIRCLE_WORKFLOW_ID
+
+
+jobs:
+  # save-hello-world-output:
+  #   # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+  #   # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+  #   docker:
+  #     - image: cimg/base:stable
+  #   # Add steps to the job
+  #   # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+  #   steps:
+  #     - run:
+  #         name: "Save hello world to file"
+  #         command: echo "hello world" > ~/test.txt 
+  #     - persist_to_workspace:
+  #         root: ~/
+  #         paths:
+  #           - test.txt   
+  # print_output_file:
+  #   docker:
+  #     - image: circleci/node:13.8.0
+  #   steps:
+  #     - attach_workspace:
+  #         at: ~/
+  #     - run: cat ~/test.txt   
+  print_pipeline_id_using_command:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - attach_workspace:
-          at: ~/
-      - run: cat ~/test.txt                    
+      - print_pipeline_id             
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   hello-world-workflow:
     jobs:
-      - save-hello-world-output   
-      - print_output_file:
-          requires:
-            - save-hello-world-output 
+      # - save-hello-world-output   
+      # - print_output_file:
+      #     requires:
+      #       - save-hello-world-output 
