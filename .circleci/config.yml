@@ -36,4 +36,4 @@ workflows:
       - save-hello-world-output   
       - print_output_file:
           requires:
-            -save-hello-world-output 
+            - save-hello-world-output 
