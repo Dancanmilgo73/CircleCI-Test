@@ -17,9 +17,9 @@ jobs:
           name: "Save hello world to file"
           command: echo "hello world" > test.txt 
       - persist_to_workspace:
-        root: ~/
-        paths:
-          -test.txt   
+          root: ~/
+          paths:
+            -test.txt   
   print_output_file:
     docker:
       - image: circleci/node:13.8.0
