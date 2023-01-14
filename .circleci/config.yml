@@ -15,7 +15,7 @@ jobs:
     steps:
       - run:
           name: "Save hello world to file"
-          command: echo "hello world" > test.txt 
+          command: echo "hello world" > ~/test.txt 
       - persist_to_workspace:
           root: ~/
           paths:
